@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity 0.8.17;
+pragma solidity 0.8.18;
 
 import { Script } from "forge-std/Script.sol";
 import { Foo } from "../src/Foo.sol";
