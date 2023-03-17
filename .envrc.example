@@ -1,8 +1,8 @@
-# Hot wallet mnemonic phrase
+# Mnemonic phrase
 export MNEMONIC=""
 
-# Hot wallet private key
-export HDWALLET_PRIVATE_KEY=""
+# Private key
+export PRIVATE_KEY=""
 
 # Mainnet RPC URLs
 export MAINNET_RPC_URL=""
