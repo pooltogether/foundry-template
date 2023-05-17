@@ -18,9 +18,16 @@ forge init my-project --template https://github.com/pooltogether/foundry-templat
 
 You may have to install the following tools to use this repository:
 
+- [NPM and node.js](https://nodejs.org/en/download) to run development scripts
 - [Foundry](https://github.com/foundry-rs/foundry) to compile and test contracts
 - [direnv](https://direnv.net/) to handle environment variables
 - [lcov](https://github.com/linux-test-project/lcov) to generate the code coverage report
+
+---
+
+***TIP:*** If you are using **Windows** and are having trouble installing Foundry, direnv, and lcov, reference the [help guide](./INSTALLATION_HELP_WIN.md).
+
+---
 
 Install dependencies:
 
