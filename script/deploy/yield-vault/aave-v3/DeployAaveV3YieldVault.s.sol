@@ -18,7 +18,7 @@ contract DeployAaveV3YieldVault is ScriptHelpers {
     _aaveV3Factory.createERC4626(ERC20(_getToken("WETH")));
 
     /* LUSD */
-    _aaveV3Factory.createERC4626(ERC20(_getToken("LUSD")));
+    // _aaveV3Factory.createERC4626(ERC20(_getToken("LUSD")));
 
     vm.stopBroadcast();
   }

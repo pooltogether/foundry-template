@@ -13,14 +13,6 @@ import { SD1x18, sd1x18 } from "prb-math/SD1x18.sol";
 import { strings } from "solidity-stringutils/strings.sol";
 import { AaveV3ERC4626Factory } from "yield-daddy/aave-v3/AaveV3ERC4626Factory.sol";
 
-import { Claimer } from "pt-v5-claimer/Claimer.sol";
-import { LiquidationPairFactory } from "pt-v5-cgda-liquidator/LiquidationPairFactory.sol";
-import { PrizePool } from "pt-v5-prize-pool/PrizePool.sol";
-import { TwabController } from "pt-v5-twab-controller/TwabController.sol";
-import { RngAuctionRelayer } from "pt-v5-draw-auction/abstract/RngAuctionRelayer.sol";
-import { Vault } from "pt-v5-vault/Vault.sol";
-import { VaultFactory } from "pt-v5-vault/VaultFactory.sol";
-
 import { Constants } from "../../src/Constants.sol";
 
 abstract contract ScriptHelpers is Constants, Script {
@@ -35,12 +27,6 @@ abstract contract ScriptHelpers is Constants, Script {
   string internal constant LOCAL_PATH = "/broadcast/Deploy.s.sol/31337";
 
   string internal DEPLOY_POOL_SCRIPT;
-
-  constructor() {
-    DEPLOY_POOL_SCRIPT = block.chainid == OPTIMISM_CHAIN_ID
-      ? "DeployL2PrizePool.s.sol"
-      : "DeployPool.s.sol";
-  }
 
   /* ============ Helpers ============ */
 
@@ -201,176 +187,6 @@ abstract contract ScriptHelpers is Constants, Script {
   }
 
   /* ============ Getters ============ */
-
-  function _getClaimer() internal returns (Claimer) {
-    return
-      Claimer(
-        _getContractAddress("Claimer", _getDeployPath(DEPLOY_POOL_SCRIPT), "claimer-not-found")
-      );
-  }
-
-  function _getL1RngAuctionRelayerRemote() internal returns (RngAuctionRelayer) {
-    return
-      RngAuctionRelayer(
-        _getContractAddress(
-          "RngAuctionRelayerRemoteOwner",
-          _getDeployPathWithChainId("DeployL1RngAuction.s.sol", ETHEREUM_CHAIN_ID),
-          "rng-auction-relayer-not-found"
-        )
-      );
-  }
-
-  function _getLiquidationPairFactory() internal returns (LiquidationPairFactory) {
-    return
-      LiquidationPairFactory(
-        _getContractAddress(
-          "LiquidationPairFactory",
-          _getDeployPath(DEPLOY_POOL_SCRIPT),
-          "liquidation-pair-factory-not-found"
-        )
-      );
-  }
-
-  function _getPrizePool() internal returns (PrizePool) {
-    return
-      PrizePool(
-        _getContractAddress("PrizePool", _getDeployPath(DEPLOY_POOL_SCRIPT), "prize-pool-not-found")
-      );
-  }
-
-  function _getTwabController() internal returns (TwabController) {
-    return
-      TwabController(
-        _getContractAddress(
-          "TwabController",
-          _getDeployPath(DEPLOY_POOL_SCRIPT),
-          "twab-controller-not-found"
-        )
-      );
-  }
-
-  function _getVaultFactory() internal returns (VaultFactory) {
-    return
-      VaultFactory(
-        _getContractAddress(
-          "VaultFactory",
-          _getDeployPath(DEPLOY_POOL_SCRIPT),
-          "vault-factory-not-found"
-        )
-      );
-  }
-
-  function _getVault(
-    address _asset,
-    string memory _name,
-    string memory _symbol,
-    TwabController _twabController,
-    ERC4626 _yieldVault,
-    PrizePool _prizePool,
-    address _claimer,
-    address _yieldFeeRecipient,
-    uint256 _yieldFeePercentage,
-    address _owner
-  ) internal returns (Vault) {
-    bytes memory selector = abi.encodeWithSelector(
-      bytes4(
-        keccak256(
-          "deployVault(address,string,string,address,address,address,address,address,uint256,address)"
-        )
-      ),
-      _asset,
-      _name,
-      _symbol,
-      address(_twabController),
-      address(_yieldVault),
-      address(_prizePool),
-      _claimer,
-      _yieldFeeRecipient,
-      _yieldFeePercentage,
-      _owner
-    );
-    return _getVault(selector);
-  }
-
-  function _getVault(bytes memory selector) internal returns (Vault) {
-    string memory _artifactsPath = _getDeployPath("DeployVault.s.sol");
-    string[] memory filesName = _getDeploymentArtifacts(_artifactsPath);
-
-    // Loop through deployment artifacts and find call to VaultFactory's `deployVault` function
-    for (uint256 i; i < filesName.length; i++) {
-      string memory jsonFile = vm.readFile(
-        string.concat(vm.projectRoot(), _artifactsPath, filesName[i])
-      );
-
-      bytes[] memory rawTxs = abi.decode(vm.parseJson(jsonFile, ".transactions"), (bytes[]));
-
-      for (uint256 j; j < rawTxs.length; j++) {
-        string memory index = vm.toString(j);
-
-        if (
-          // _matches(
-          //   abi.decode(
-          //     stdJson.parseRaw(
-          //       jsonFile,
-          //       string.concat(".transactions[", index, "].transactionType")
-          //     ),
-          //     (string)
-          //   ),
-          //   "CALL"
-          // ) &&
-          // _matches(
-          //   abi.decode(
-          //     stdJson.parseRaw(jsonFile, string.concat(".transactions[", index, "].contractName")),
-          //     (string)
-          //   ),
-          //   "VaultFactory"
-          // ) &&
-          // _matches(
-          //   abi.decode(
-          //     stdJson.parseRaw(jsonFile, string.concat(".transactions[", index, "].arguments[2]")),
-          //     (string)
-          //   ),
-          //   _tokenSymbol
-          // ) &&
-          // _matches(
-          //   abi.decode(
-          //     stdJson.parseRaw(
-          //       jsonFile,
-          //       string.concat(".transactions[", index, "].additionalContracts[0].transactionType")
-          //     ),
-          //     (string)
-          //   ),
-          //   "CREATE2"
-          // )
-          keccak256(abi.encodePacked(selector)) ==
-          keccak256(
-            abi.encodePacked(
-              abi.decode(
-                stdJson.parseRaw(
-                  jsonFile,
-                  string.concat(".transactions[", vm.toString(j), "].transaction.data")
-                ),
-                (string)
-              )
-            )
-          )
-        ) {
-          return
-            Vault(
-              abi.decode(
-                stdJson.parseRaw(
-                  jsonFile,
-                  string.concat(".transactions[", index, "].additionalContracts[0].address")
-                ),
-                (address)
-              )
-            );
-        }
-      }
-    }
-
-    revert("vault-not-found");
-  }
 
   // Yield Vaults
   // Aave V3

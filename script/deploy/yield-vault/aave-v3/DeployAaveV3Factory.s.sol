@@ -10,7 +10,7 @@ contract DeployAaveV3Factory is ScriptHelpers {
   function run() public {
     vm.startBroadcast();
 
-    if (block.chainid == OPTIMISM_CHAIN_ID || block.chainId == OPTIMISM_GOERLI_CHAIN_ID) {
+    if (block.chainid == OPTIMISM_CHAIN_ID) {
       new AaveV3ERC4626Factory(
         IPool(address(AaveV3Optimism.POOL)),
         EXECUTIVE_TEAM_OPTIMISM_ADDRESS, // Reward recipient,
