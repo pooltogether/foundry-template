@@ -3,9 +3,22 @@ src = 'src'
 out = 'out'
 test = 'test'
 libs = ['lib']
-solc = "0.8.18"
+solc = "0.8.19"
 fs_permissions = [{ access = "read", path = "./broadcast"}]
 gas_reports = ["*"]
+optimizer = true
+via_ir = true
+ffi = true
+
+[profile.default.optimizer_details]
+peephole = true
+inliner = true
+jumpdest_remover = true
+order_literals = true
+deduplicate = true
+cse = true
+constant_optimizer = true
+yul = true
 
 [rpc_endpoints]
 mainnet = "${MAINNET_RPC_URL}"
@@ -13,6 +26,7 @@ arbitrum = "${ARBITRUM_RPC_URL}"
 optimism = "${OPTIMISM_RPC_URL}"
 polygon = "${POLYGON_RPC_URL}"
 
+sepolia = "${SEPOLIA_RPC_URL}"
 goerli = "${GOERLI_RPC_URL}"
 arbitrum-goerli = "${ARBITRUM_GOERLI_RPC_URL}"
 optimism-goerli = "${OPTIMISM_GOERLI_RPC_URL}"
@@ -24,6 +38,7 @@ arbitrum = { key = "${ARBITRUM_ETHERSCAN_API_KEY}", url = "https://api.arbiscan.
 optimism = { key = "${OPTIMISM_ETHERSCAN_API_KEY}", url = "https://api-optimistic.etherscan.io/api" }
 polygon = { key = "${POLYGONSCAN_API_KEY}", url = "https://api.polygonscan.com/api" }
 
+sepolia = { key = "${ETHERSCAN_API_KEY}", url = "https://api-sepolia.etherscan.io/api" }
 goerli = { key = "${ETHERSCAN_API_KEY}", url = "https://api-goerli.etherscan.io/api" }
 arbitrum-goerli = { key = "${ARBITRUM_ETHERSCAN_API_KEY}", url = "https://api-goerli.arbiscan.io/api" }
 optimism-goerli = { key = "${OPTIMISM_ETHERSCAN_API_KEY}", url = "https://api-goerli-optimistic.etherscan.io/api" }

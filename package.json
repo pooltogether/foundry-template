@@ -17,6 +17,8 @@
     "----------LOCAL-DEPLOYMENT-SCRIPTS----------": "",
     "anvil:ethereum:local": "anvil --fork-url $MAINNET_RPC_URL --port $LOCAL_L1_PORT",
     "anvil:optimism:local": "anvil --fork-url $OPTIMISM_RPC_URL --port $LOCAL_L2_PORT --code-size-limit $LOCAL_CODE_SIZE_LIMIT_BYTES",
+    "deploy:aave-v3-factory:local": "forge script script/deploy/yield-vault/aave-v3/DeployAaveV3Factory.s.sol:DeployAaveV3Factory --rpc-url http://localhost:$LOCAL_L2_PORT --private-key $LOCAL_PRIVATE_KEY --sender $LOCAL_SENDER --broadcast",
+    "deploy:aave-v3-yield-vaults:local": "forge script script/deploy/yield-vault/aave-v3/DeployAaveV3YieldVault.s.sol:DeployAaveV3YieldVault --rpc-url http://localhost:$LOCAL_L2_PORT --private-key $LOCAL_PRIVATE_KEY --sender $LOCAL_SENDER --broadcast",
     "----------LINTING----------": "",
     "format": "prettier --config .prettierrc --write \"**/*.{json,md,sol,yml}\"",
     "format:file": "prettier --config .prettierrc --write",
