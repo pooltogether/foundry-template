@@ -11,3 +11,6 @@
 [submodule "lib/pt-v5-chainlink-vrf-v2-direct"]
 	path = lib/pt-v5-chainlink-vrf-v2-direct
 	url = https://github.com/generationsoftware/pt-v5-chainlink-vrf-v2-direct
+[submodule "lib/openzeppelin-contracts"]
+	path = lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
