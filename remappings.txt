@@ -1,4 +1,12 @@
 ds-test/=lib/forge-std/lib/ds-test/src/
 forge-std/=lib/forge-std/src/
+
 aave-address-book/=lib/aave-address-book/src/
+chainlink/=lib/pt-v5-chainlink-vrf-v2-direct/lib/chainlink/contracts/src/v0.8/
+openzeppelin/=lib/openzeppelin-contracts/contracts/
+prb-math/=lib/pt-v5-cgda-liquidator/lib/prb-math/src/
+solidity-stringutils/=lib/solidity-stringutils/src/
 yield-daddy/=lib/yield-daddy/src/
+
+pt-v5-chainlink-vrf-v2-direct/=lib/pt-v5-chainlink-vrf-v2-direct/src/
+
