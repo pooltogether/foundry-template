@@ -1,6 +1,8 @@
 # Foundry template
 
-Template to kickstart a Foundry project.
+```sh
+forge init yield-vault-lusd --template https://github.com/pooltogether/foundry-template.git
+```.
 
 ## Getting started
 

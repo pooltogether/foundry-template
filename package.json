@@ -1,14 +1,14 @@
 {
-  "name": "@pooltogether/foundry-template",
+  "name": "yield-lusd-vault",
   "version": "1.0.0",
   "description": "Template to kickstart a Foundry project",
   "author": {
-    "name": "PoolTogether Inc.",
-    "url": "https://github.com/pooltogether"
+    "name": "sliponit",
+    "url": "https://github.com/sliponit"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pooltogether/foundry-template.git"
+    "url": "git+https://github.com/sliponit/yield-vault-lusd.git"
   },
   "scripts": {
     "clean": "forge clean",
