@@ -8,3 +8,6 @@
 [submodule "lib/yield-daddy"]
 	path = lib/yield-daddy
 	url = https://github.com/timeless-fi/yield-daddy
+[submodule "lib/pt-v5-chainlink-vrf-v2-direct"]
+	path = lib/pt-v5-chainlink-vrf-v2-direct
+	url = https://github.com/generationsoftware/pt-v5-chainlink-vrf-v2-direct
